@@ -1,0 +1,96 @@
+@import "../../sass/config";
+
+@mixin tooltip-base {
+  display: flex;
+  font-size: 12px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  line-height: 1.4;
+
+  &__inner {
+    display: inline-block;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &__top {
+    display: flex;
+
+    &:after {
+      content: '';
+      padding: 3px;
+      background: url('../../images/tooltip-background.png');
+      background-position: top right;
+    }
+  }
+
+  &__body {
+    min-height: 2px;
+    padding: 8px 3px 2px 9px;
+    background: url('../../images/tooltip-background.png');
+    background-position: top left;
+  }
+
+  &__footer {
+    display: flex;
+    width: 100%;
+
+    &:before {
+      content: '';
+      flex: 1;
+      padding: 3px;
+      background: url('../../images/tooltip-background.png');
+      background-position: bottom left;
+    }
+
+    &:after {
+      content: '';
+      padding: 3px;
+      background: url('../../images/tooltip-background.png');
+      background-position: bottom right;
+    }
+  }
+}
+
+.tooltip {
+  @include tooltip-base;
+
+  &--inline {
+    display: inline-block;
+  }
+
+  &--fixed {
+    .tooltip__inner {
+      width: 100%;
+      width: 320px;
+    }
+
+    .tooltip__body {
+      flex: 1;
+    }
+  }
+
+  &__icon {
+    margin-right: .25em;
+    transform: translateY(2px);
+  }
+
+  &__title {
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  &__body {
+    p:last-child {
+      margin-bottom: 2px;
+    }
+  }
+}
+
+#tooltip-root {
+  position: absolute;
+  z-index: $z-index-tooltips;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  pointer-events: none;
+}

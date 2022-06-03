@@ -1,0 +1,70 @@
+@import "../sass/config";
+
+.trees {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+.tree {
+  position: relative;
+  min-width: 300px;  
+  color: white;
+  margin-right: 1em;
+
+  .talent {
+    position: absolute;
+
+    // Rows
+    @for $i from 0 through 6 {
+      &[data-row="#{$i}"] {
+        top: $row-offset + (($i) * $row-distance);
+      }
+    }
+
+    // Columns
+    @for $i from 0 through 3 {
+      &[data-col="#{$i}"] { 
+        left: $col-offset + ($col-distance * $i); 
+      }
+    }
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &__header {
+    text-align: center;
+
+    h3 {
+      margin-top: .75em;
+      margin-bottom: .75em;
+    }
+  }
+
+  &__reset {
+    position: absolute;
+    top: 1em;
+    right: .5em;
+    cursor: pointer;
+    color: lighten(red, 20%);
+    animation: fadeIn .2s ease-in-out;
+    transform: scale(1);
+
+    &:hover {
+      color: lighten(red, 30%);
+      transform: scale(1.1);
+    }
+  }
+
+  &__body {
+    position: relative;
+    height: 520px;
+    border: 1px solid black;
+    background-color: #222;
+    background-size: cover;
+    background-position: center;
+    border-radius: 5px;
+  }
+}

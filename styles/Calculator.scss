@@ -1,0 +1,16 @@
+.calculator {
+  animation: fadeIn .4s ease-out;
+
+  &__points {
+    padding: 1em;
+    color: white;
+    text-align: right;
+    border-radius: 5px;
+    background: #222;
+
+    span {
+      margin-left: 2em;
+      animation: fadeIn .2s ease-out;
+    }
+  }
+}

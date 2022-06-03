@@ -1,0 +1,86 @@
+@import "../sass/_config";
+
+@mixin icon-size($size) {
+  $offset: $size * 0.1;
+
+  width: $size;
+  height: $size;
+
+  .icon__bg {
+    width: ceil($size - $offset);
+    height: ceil($size - $offset);
+    border-radius: $size / 8;
+    top: $size * 0.05;
+    left: $size * 0.05;
+  }
+
+  .icon__frame {
+    width: $size + $offset;
+    height: $size + $offset;
+    top: -($offset * .5);
+    left: -($offset * .5);
+  }
+}
+
+.icon {
+  position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: #222;
+  border-radius: 5px;
+  
+  &:hover {
+    .icon__bg {
+      box-shadow: inset 0px 0px 6px 3px rgba($color-icon-overlay, .8);
+    }
+  }
+
+  &:active {
+    .icon__bg {
+      box-shadow: inset 0px 0px 6px 3px rgba(lighten($color-icon-overlay, 20%), .8);
+    }
+  }
+
+  &--small {
+    @include icon-size(20px);
+  }
+
+  &--medium {
+    @include icon-size(40px);
+  }
+
+  &--large {
+    @include icon-size(60px);
+  }
+
+  &--golden {
+    .icon__frame {
+      background-image: url('../images/icon-meta/large/gold.png');
+    }
+  }
+
+  &--loaded {
+    .icon__bg {
+      opacity: 1;
+    }
+
+    &.icon--fade-in .icon__bg {
+      animation: fadeIn .1s forwards;
+    }
+  }
+
+  &__bg {
+    position: absolute;
+    background-size: cover;
+    opacity: 0;
+  }
+
+  &__frame {
+    position: absolute;
+    background-image: url('../images/icon-meta/large/default.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+}
+

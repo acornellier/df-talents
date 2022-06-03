@@ -1,0 +1,80 @@
+@import "../sass/config";
+
+.talent {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  transition: filter .1s linear;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, .75);
+  filter: none;
+  cursor: pointer;
+
+  &--available {
+    .talent__status::after {
+      box-shadow: inset 0px 0px 6px 3px rgba($color-green, .8);
+    }
+
+    .point-label {
+      color: $color-green;
+    }
+  }
+
+  &--disabled-with-points {
+    .talent__status::after {
+      box-shadow: inset 0px 0px 6px 3px rgba($color-yellow, .8);
+    }
+
+    .point-label {
+      color: $color-yellow;
+    }
+  }
+
+  &--disabled {
+    filter: grayscale(100%);
+
+    .talent__status { 
+      opacity: .7;
+    }
+  }
+
+  &__status {
+    position: absolute;
+    width: 48px;
+    height: 46px;
+    bottom: -1px;
+    left: -4px;
+    border-radius: 6px;
+    background-image: url('../images/icon-meta/large/default.png');
+    background-size: 100%;
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      top: 2px;
+      left: 2px;
+      border-radius: 5px;
+    }
+  }
+}
+
+.point-label {
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+  min-width: 7px;
+  text-align: center;
+  padding: 1px 3px;
+  color: #999;
+  font-size: 11px;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #111;
+  border-radius: 4px;
+  user-select: none;
+
+  &--enabled {
+    color: white;
+  }
+}

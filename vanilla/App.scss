@@ -1,0 +1,76 @@
+@import "sass/config";
+@import "sass/normalize";
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  color: white;
+  background-color: #111;
+  font-family: Verdana;
+}
+
+ul {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: pink;
+
+  &:hover {
+    color: lighten(pink, 50%);
+  }
+}
+
+.yellow { color: $color-yellow; }
+.green { color: $quality-2; }
+.subtle { color: $quality-0; }
+
+.tight {
+  margin-bottom: 0;
+
+  & + p {
+    margin-top: 0;
+  }
+}
+
+.App {
+  min-height: 100vh;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  min-height: 90vh;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1em;
+}
+
+.inline-items {
+  display: flex;
+
+  & > * {
+    margin-right: 1em;
+  }
+}
+
+footer {
+  padding: 2em;
+  font-size: 12px;
+  text-align: center;
+}
+
+.page-loader {
+  display: flex;
+  height: 85vh;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  animation: fadeIn 3s forwards;
+}
