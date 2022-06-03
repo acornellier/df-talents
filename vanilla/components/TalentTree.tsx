@@ -67,7 +67,7 @@ export const TalentTree: React.FC<Props> = ({
       <div
         className="tree__body"
         style={{
-          backgroundImage: `url(${require(`../images/specs/${specId}.jpg`)})`,
+          backgroundImage: `url(${require(`../../public/images/specs/${specId}.jpg`)})`,
         }}
       >
         {talents.map((talent) => {
@@ -105,6 +105,5 @@ export const TalentTree: React.FC<Props> = ({
     </div>
   )
 }
-;(TalentTree as any).whyDidYouRender = true
 
 export default connect(null, { resetSpec })(TalentTree)

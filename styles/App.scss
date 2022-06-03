@@ -1,7 +1,9 @@
-@import "sass/config";
-@import "sass/normalize";
+@import 'config';
+@import 'normalize';
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
 }
 
@@ -24,9 +26,15 @@ a {
   }
 }
 
-.yellow { color: $color-yellow; }
-.green { color: $quality-2; }
-.subtle { color: $quality-0; }
+.yellow {
+  color: $color-yellow;
+}
+.green {
+  color: $quality-2;
+}
+.subtle {
+  color: $quality-0;
+}
 
 .tight {
   margin-bottom: 0;

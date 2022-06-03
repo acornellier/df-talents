@@ -17,8 +17,6 @@ interface Props {
 const EMPTY_TALENTS = Map<number, number>()
 
 export class Calculator extends React.PureComponent<Props> {
-  static whyDidYouRender = true
-
   state = {
     knownTalents: EMPTY_TALENTS,
   }

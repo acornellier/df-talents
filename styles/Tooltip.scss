@@ -1,4 +1,4 @@
-@import "../../sass/config";
+@import 'config';
 
 @mixin tooltip-base {
   display: flex;
@@ -18,7 +18,7 @@
     &:after {
       content: '';
       padding: 3px;
-      background: url('../../images/tooltip-background.png');
+      background: url('../public/images/tooltip-background.png');
       background-position: top right;
     }
   }
@@ -26,7 +26,7 @@
   &__body {
     min-height: 2px;
     padding: 8px 3px 2px 9px;
-    background: url('../../images/tooltip-background.png');
+    background: url('../public/images/tooltip-background.png');
     background-position: top left;
   }
 
@@ -38,14 +38,14 @@
       content: '';
       flex: 1;
       padding: 3px;
-      background: url('../../images/tooltip-background.png');
+      background: url('../public/images/tooltip-background.png');
       background-position: bottom left;
     }
 
     &:after {
       content: '';
       padding: 3px;
-      background: url('../../images/tooltip-background.png');
+      background: url('../public/images/tooltip-background.png');
       background-position: bottom right;
     }
   }
@@ -70,7 +70,7 @@
   }
 
   &__icon {
-    margin-right: .25em;
+    margin-right: 0.25em;
     transform: translateY(2px);
   }
 

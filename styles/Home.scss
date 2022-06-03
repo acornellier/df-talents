@@ -8,18 +8,18 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url('../images/home-bg.jpg');
+    background-image: url('../public/images/home-bg.jpg');
     background-size: cover;
-    opacity: .05;
+    opacity: 0.05;
     z-index: -1;
   }
 
   &__class-picker {
     margin: 3.5em 0;
     transform: translateY(0);
-    
+
     &--highlight {
-      transition: all .4s ease-out;
+      transition: all 0.4s ease-out;
       transform: translateY(35vh);
       animation: fadeIn 1s ease-out;
     }

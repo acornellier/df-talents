@@ -3,7 +3,12 @@ import ReactDOM from 'react-dom'
 import { debounce } from '../../lib/helpers'
 
 interface Props {
-  resize?: (rect: { left: number, top: number, width: number, height: number }) => void
+  resize?: (rect: {
+    left: number
+    top: number
+    width: number
+    height: number
+  }) => void
   children: React.ReactElement
 }
 
@@ -12,9 +17,12 @@ export class Trigger extends React.PureComponent<Props> {
 
   get boundingRect() {
     if (!this.trigger.current) {
+      return
       throw new Error('Trigger does not have reference to itself')
     }
-    const { width, height, top, left } = (ReactDOM.findDOMNode(this.trigger.current) as HTMLElement).getBoundingClientRect()
+    const { width, height, top, left } = (
+      ReactDOM.findDOMNode(this.trigger.current) as HTMLElement
+    ).getBoundingClientRect()
     return { width, height, top, left }
   }
 
@@ -26,7 +34,7 @@ export class Trigger extends React.PureComponent<Props> {
     window.addEventListener('resize', this.resize)
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     window.removeEventListener('scroll', this.resize)
     window.removeEventListener('resize', this.resize)
   }
@@ -39,7 +47,7 @@ export class Trigger extends React.PureComponent<Props> {
     const { resize, children, ...props } = this.props
     return React.cloneElement(children, {
       ...props,
-      ref: this.trigger
+      ref: this.trigger,
     })
   }
 }

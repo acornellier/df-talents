@@ -15,8 +15,6 @@ interface Props {
 }
 
 export class Talent extends React.PureComponent<Props> {
-  static whyDidYouRender = true
-
   static defaultProps = {
     points: 0,
     disabled: false,
@@ -76,5 +74,3 @@ export class Talent extends React.PureComponent<Props> {
     )
   }
 }
-
-// ;(Talent as any).whyDidYouRender = true

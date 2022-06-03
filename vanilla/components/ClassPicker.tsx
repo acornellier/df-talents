@@ -20,8 +20,6 @@ const classNameForItem = (c: ClassData, selected: string) =>
   })
 
 export class ClassPicker extends React.PureComponent<Props> {
-  static whyDidYouRender = true
-
   render() {
     const { selected, center = false } = this.props
 

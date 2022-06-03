@@ -1,4 +1,4 @@
-@import "../sass/config";
+@import 'config';
 
 .trees {
   display: flex;
@@ -8,7 +8,7 @@
 
 .tree {
   position: relative;
-  min-width: 300px;  
+  min-width: 300px;
   color: white;
   margin-right: 1em;
 
@@ -17,15 +17,15 @@
 
     // Rows
     @for $i from 0 through 6 {
-      &[data-row="#{$i}"] {
+      &[data-row='#{$i}'] {
         top: $row-offset + (($i) * $row-distance);
       }
     }
 
     // Columns
     @for $i from 0 through 3 {
-      &[data-col="#{$i}"] { 
-        left: $col-offset + ($col-distance * $i); 
+      &[data-col='#{$i}'] {
+        left: $col-offset + ($col-distance * $i);
       }
     }
   }
@@ -38,18 +38,18 @@
     text-align: center;
 
     h3 {
-      margin-top: .75em;
-      margin-bottom: .75em;
+      margin-top: 0.75em;
+      margin-bottom: 0.75em;
     }
   }
 
   &__reset {
     position: absolute;
     top: 1em;
-    right: .5em;
+    right: 0.5em;
     cursor: pointer;
     color: lighten(red, 20%);
-    animation: fadeIn .2s ease-in-out;
+    animation: fadeIn 0.2s ease-in-out;
     transform: scale(1);
 
     &:hover {

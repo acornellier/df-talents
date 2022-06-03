@@ -1,4 +1,4 @@
-@import "../sass/_config";
+@import '_config';
 
 @mixin icon-size($size) {
   $offset: $size * 0.1;
@@ -17,8 +17,8 @@
   .icon__frame {
     width: $size + $offset;
     height: $size + $offset;
-    top: -($offset * .5);
-    left: -($offset * .5);
+    top: -($offset * 0.5);
+    left: -($offset * 0.5);
   }
 }
 
@@ -29,16 +29,17 @@
   background-size: contain;
   background-color: #222;
   border-radius: 5px;
-  
+
   &:hover {
     .icon__bg {
-      box-shadow: inset 0px 0px 6px 3px rgba($color-icon-overlay, .8);
+      box-shadow: inset 0px 0px 6px 3px rgba($color-icon-overlay, 0.8);
     }
   }
 
   &:active {
     .icon__bg {
-      box-shadow: inset 0px 0px 6px 3px rgba(lighten($color-icon-overlay, 20%), .8);
+      box-shadow: inset 0px 0px 6px 3px
+        rgba(lighten($color-icon-overlay, 20%), 0.8);
     }
   }
 
@@ -56,7 +57,7 @@
 
   &--golden {
     .icon__frame {
-      background-image: url('../images/icon-meta/large/gold.png');
+      background-image: url('../public/images/icon-meta/large/gold.png');
     }
   }
 
@@ -66,7 +67,7 @@
     }
 
     &.icon--fade-in .icon__bg {
-      animation: fadeIn .1s forwards;
+      animation: fadeIn 0.1s forwards;
     }
   }
 
@@ -78,9 +79,8 @@
 
   &__frame {
     position: absolute;
-    background-image: url('../images/icon-meta/large/default.png');
+    background-image: url('../public/images/icon-meta/large/default.png');
     background-repeat: no-repeat;
     background-size: contain;
   }
 }
-
