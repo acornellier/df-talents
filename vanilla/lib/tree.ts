@@ -135,7 +135,7 @@ export const getCumulativePointsPerRow = (
   known: Map<number, number>,
   specId: number
 ): number[] => {
-  return known.reduce((reduction, points, talentId) => {
+  return known.reduce<number[]>((reduction, points, talentId) => {
     const t = talentsBySpec[specId][talentId]
     if (t && points > 0) {
       for (let row = t.row; row <= MAX_ROWS; row++) {

@@ -8,7 +8,6 @@ import '../styles/Calculator.scss'
 import '../styles/ClassPicker.scss'
 import '../styles/Home.scss'
 import '../styles/Icon.scss'
-import '../styles/Playground.scss'
 import '../styles/Talent.scss'
 import '../styles/TalentTree.scss'
 import '../styles/Tooltip.scss'
@@ -23,10 +22,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         <footer>
           <Link href="/">Home</Link>
           {' - '}
-          <Link href="/playground">Components</Link>
-          {' - '}
           <Link
-            href="https://github.com/mirague/wow-talent-calculator"
+            href="https://github.com/acornellier/df-talents"
             target="_blank"
           >
             Source

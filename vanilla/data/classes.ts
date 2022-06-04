@@ -108,13 +108,3 @@ export const specNames: Record<SpecId, string> = {
   382: 'Holy',
   383: 'Protection',
 }
-
-export const specByName: string = classes.reduce(
-  (previousValue: object, currentValue: Class) => {
-    return {
-      ...previousValue,
-      [currentValue.name.toLowerCase()]: currentValue,
-    }
-  },
-  {}
-)

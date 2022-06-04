@@ -1,23 +1,22 @@
 import fs from 'fs'
-import spells from '../data/spells.json'
 import { classes } from '../data/classes'
 import { talentsById } from '../data/talents'
-import request from 'request'
+// import request from 'request'
 
 const ICONS_FOLDER = './public/images/icons'
 const SIZES = ['medium', 'large']
 
-const onlyUnique = (value, index, self) => self.indexOf(value) === index
-const getIcon = (item): string => item.icon
+const onlyUnique = (value: string, index: number, self: Array<unknown>) =>
+  self.indexOf(value) === index
+const getIcon = (item: { icon: string }): string => item.icon
 const isSizeMissing =
-  (icon) =>
-  (size): boolean =>
+  (icon: string) =>
+  (size: string): boolean =>
     !fs.existsSync(getPath(icon, size))
 
 const getIconNames = (): string[] => {
   return [
     'inv_misc_questionmark',
-    ...Object.values(spells).map(getIcon),
     ...Object.values(classes).map(getIcon),
     ...Object.values(talentsById).map(getIcon),
   ].filter(onlyUnique)
@@ -36,8 +35,8 @@ const getUrl = (icon: string, size: string): string => {
   return `https://wow.zamimg.com/images/wow/icons/${size}/${icon}.jpg`
 }
 
-const download = async (uri: string, path: string) =>
-  request(uri).pipe(fs.createWriteStream(path))
+const download = async (uri: string, path: string) => ''
+// request(uri).pipe(fs.createWriteStream(path))
 
 export const fetchIcons = async () => {
   const icons = getMissingIconNames()
