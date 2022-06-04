@@ -1,6 +1,6 @@
-import { 
-  CalculatorActionTypes, 
-  SET_CLASS, 
+import {
+  CalculatorActionTypes,
+  SET_SPEC,
   ADD_POINT,
   REMOVE_POINT,
   SET_POINTS,
@@ -8,28 +8,31 @@ import {
   RESET_SPEC,
 } from './types'
 
-export const setClass = (classId: number, points?: Points): CalculatorActionTypes => ({
-  type: SET_CLASS,
+export const setSpec = (
+  classId: number,
+  points?: Points
+): CalculatorActionTypes => ({
+  type: SET_SPEC,
   classId,
-  points
+  points,
 })
 
 export const addPoint = (talentId: number): CalculatorActionTypes => ({
   type: ADD_POINT,
-  talentId
+  talentId,
 })
 
 export const removePoint = (talentId: number): CalculatorActionTypes => ({
   type: REMOVE_POINT,
-  talentId
+  talentId,
 })
 
 export const setPoints = (points: Points): CalculatorActionTypes => ({
   type: SET_POINTS,
-  points
+  points,
 })
 
 export const resetSpec = (specId: number): CalculatorActionTypes => ({
   type: RESET_SPEC,
-  specId
+  specId,
 })

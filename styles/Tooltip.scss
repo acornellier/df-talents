@@ -51,8 +51,19 @@
   }
 }
 
+.Tooltip-Wrapper {
+  display: inline-block;
+  position: relative;
+}
+
 .tooltip {
   @include tooltip-base;
+
+  position: absolute;
+  z-index: 100;
+  left: calc(100% + 30px);
+  top: 50%;
+  transform: translateX(0) translateY(-50%);
 
   &--inline {
     display: inline-block;
@@ -84,13 +95,4 @@
       margin-bottom: 2px;
     }
   }
-}
-
-#tooltip-root {
-  position: absolute;
-  z-index: $z-index-tooltips;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  pointer-events: none;
 }

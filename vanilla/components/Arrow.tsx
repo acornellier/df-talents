@@ -24,8 +24,8 @@ const getDirection = (from: TalentData, to: TalentData): string => {
   )
 }
 
-export const Arrow: FC<Props> = ({ from, to, active = false }) => {
-  const props = {
+export function Arrow({ from, to, active = false }: Props) {
+  const props: Record<string, string | number> = {
     'data-col': from.col,
     'data-row': from.row,
   }

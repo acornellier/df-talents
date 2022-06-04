@@ -1,12 +1,11 @@
 import { Map } from 'immutable'
-import { 
-  talentsBySpec, 
-  talentToSpec, 
-  talentsBySpecArray, 
-  talentsById
-} from '../data/talents';
+import {
+  talentsBySpec,
+  talentToSpec,
+  talentsBySpecArray,
+  talentsById,
+} from '../data/talents'
 import { classById } from '../data/classes'
-import spells from '../data/spells.json'
 
 export const MAX_POINTS = 51
 export const MAX_ROWS = 7
@@ -37,47 +36,64 @@ export const SORT_TALENTS_BY_SPEC = (a: TalentData, b: TalentData) => {
 /**
  * Returns the overall points spent in the tree.
  */
-export function getPointsInSpec(specId: number, known: Map<number, number>): number {
+export function getPointsInSpec(
+  specId: number,
+  known: Map<number, number>
+): number {
   // TODO: Hard to test this method when referencing talents from a file. Improve this.
-  return Object.values(talentsBySpec[specId]).reduce((prev: number, current: TalentData) => {
-    return prev + known.get(current.id, 0)
-  }, 0)
+  return Object.values(talentsBySpec[specId]).reduce(
+    (prev: number, current: TalentData) => {
+      return prev + known.get(current.id, 0)
+    },
+    0
+  )
 }
 
 export function calcAvailablePoints(known: Map<number, number>): number {
-  return Math.max(0, MAX_POINTS - known.reduce((prev, current) => prev + current, 0))
+  return Math.max(
+    0,
+    MAX_POINTS - known.reduce((prev, current) => prev + current, 0)
+  )
 }
 
 /**
  * Returns whether a talent's other talent requirements are met.
  */
-export function calcMeetsRequirements(talent: TalentData, known: Map<number, number>): boolean {
-  if (talent.requires.length === 0) {
-    return true
-  }
-  return talent.requires.reduce((prev, req) => {
-    if (!prev) return false
-    return known.get(req.id, 0) >= req.qty
-  }, true)
+export function calcMeetsRequirements(
+  talent: TalentData,
+  known: Map<number, number>
+) {
+  return talent.requires?.every((req) => {
+    const dependencyTalent = talentsById[req]
+    return known.get(req, 0) >= dependencyTalent.ranks
+  })
 }
 
-export function getNameForTalent(talentId: number): string {
-  const spell: SpellData = spells[talentsById[talentId].ranks[0]]
-  if (spell) return spell.name
-  return 'Unknown'
-}
-
-export function getUnmetRequirements(talent: TalentData, known: Map<number, number>, pointsInSpec: number, specName: string): string {
+export function getUnmetRequirements(
+  talent: TalentData,
+  known: Map<number, number>,
+  pointsInSpec: number,
+  specName: string
+): string {
   const missing = []
-  const dependency = talent.requires[0]
-  if (dependency && known.get(dependency.id, 0) < dependency.qty) {
-    missing.push(
-      `Requires ${dependency.qty} point${dependency.qty !== 1 ? 's' : ''} in ${getNameForTalent(dependency.id)}`
-    )
+  const dependency = talent.requires?.[0]
+
+  if (dependency) {
+    const dependencyTalent = talentsById[dependency]
+
+    if (known.get(dependency, 0) < dependencyTalent.ranks) {
+      missing.push(
+        `Requires ${dependencyTalent.ranks} point${
+          dependencyTalent.ranks !== 1 ? 's' : ''
+        } in ${dependencyTalent.name}`
+      )
+    }
   }
 
-  if (talent.row * 5 > pointsInSpec) {
-    missing.push(`Requires ${talent.row * 5} points in ${specName}`)
+  if (talent.row >= 4 && pointsInSpec < 8) {
+    missing.push(`Requires 8 points in ${specName}`)
+  } else if (talent.row >= 7 && pointsInSpec < 20) {
+    missing.push(`Requires 20 points in ${specName}`)
   }
 
   // Hackfix: Returning an Array will cause the prop to change everytime, causing re-renders on all
@@ -86,33 +102,39 @@ export function getUnmetRequirements(talent: TalentData, known: Map<number, numb
   return missing.join('_')
 }
 
-export const canLearnTalent = (known: Map<number, number>, talent: TalentData): boolean => {
-   // Reached the max rank?
-   if (known.get(talent.id, 0) >= talent.ranks.length) {
+export const canLearnTalent = (
+  known: Map<number, number>,
+  talent: TalentData
+) => {
+  // Reached the max rank?
+  if (known.get(talent.id, 0) >= talent.ranks) {
     return false
   }
-
   // Spend a maximum of 51 points
   if (calcAvailablePoints(known) === 0) {
     return false
   }
-  
+
   // Support for specific Talent dependency requirement.
-  if (talent.requires.length > 0 && !calcMeetsRequirements(talent, known)) {
+  if (talent.requires?.length && !calcMeetsRequirements(talent, known)) {
     return false
   }
-  
+
   // Check we have the required amount of points spent in the tree for this talent
-  const requiredPoints = talent.row * 5
   const pointsInSpec = getPointsInSpec(talentToSpec[talent.id], known)
-  if (requiredPoints > pointsInSpec) {
+  if (talent.row >= 4 && pointsInSpec < 8) {
+    return false
+  } else if (talent.row >= 7 && pointsInSpec < 20) {
     return false
   }
 
   return true
 }
 
-export const getCumulativePointsPerRow = (known: Map<number, number>, specId: number): number[] => {
+export const getCumulativePointsPerRow = (
+  known: Map<number, number>,
+  specId: number
+): number[] => {
   return known.reduce((reduction, points, talentId) => {
     const t = talentsBySpec[specId][talentId]
     if (t && points > 0) {
@@ -124,7 +146,10 @@ export const getCumulativePointsPerRow = (known: Map<number, number>, specId: nu
   }, [])
 }
 
-export const canUnlearnTalent = (known: Map<number, number>, talent: TalentData): boolean => {
+export const canUnlearnTalent = (
+  known: Map<number, number>,
+  talent: TalentData
+): boolean => {
   const currentPoints = known.get(talent.id, 0)
   const specId = talentToSpec[talent.id]
 
@@ -134,16 +159,16 @@ export const canUnlearnTalent = (known: Map<number, number>, talent: TalentData)
     return false
   }
 
-  // Prevent if another talent depends on this 
+  // Prevent if another talent depends on this
   const isDependency = known.some((points, talentId) => {
     const t = talentsBySpec[specId][talentId]
-    return t && points > 0 && t.requires.some((req) => req.id === talent.id)
+    return points > 0 && !!t?.requires?.some((req) => req === talent.id)
   })
   if (isDependency) {
     console.warn('is dependency')
     return false
   }
-  
+
   // Walk through every talent and ensure no requirements are breached
   let cumulativePointsPerRow = getCumulativePointsPerRow(known, specId)
   for (let r = talent.row; r < cumulativePointsPerRow.length; r++) {
@@ -152,7 +177,12 @@ export const canUnlearnTalent = (known: Map<number, number>, talent: TalentData)
   }
   const wouldBreach = known.some((points, talentId) => {
     const t = talentsBySpec[specId][talentId]
-    return t && points > 0 && t.row > 0 && cumulativePointsPerRow[t.row - 1] < t.row * 5
+    return (
+      t &&
+      points > 0 &&
+      t.row > 0 &&
+      cumulativePointsPerRow[t.row - 1] < t.row * 5
+    )
   })
   if (wouldBreach) {
     console.warn('point requirements would be breached')
@@ -165,9 +195,12 @@ export const canUnlearnTalent = (known: Map<number, number>, talent: TalentData)
 /**
  * Adds a single talent point to the Map, if possible.
  */
-export const addTalentPoint = (known: Map<number, number>, talent: TalentData): Map<number, number> => {
+export const addTalentPoint = (
+  known: Map<number, number>,
+  talent: TalentData
+): Map<number, number> => {
   const currentPoints = known.get(talent.id, 0)
-  
+
   if (!canLearnTalent(known, talent)) {
     return known
   }
@@ -178,14 +211,17 @@ export const addTalentPoint = (known: Map<number, number>, talent: TalentData): 
 /**
  * Removes a single talent point from the Map, if possible.
  */
-export const removeTalentPoint = (known: Map<number, number>, talent: TalentData): Map<number, number> => {
+export const removeTalentPoint = (
+  known: Map<number, number>,
+  talent: TalentData
+): Map<number, number> => {
   const currentPoints = known.get(talent.id, 0)
 
   if (!canUnlearnTalent(known, talent)) {
     return known
   }
 
-  return currentPoints === 1 
+  return currentPoints === 1
     ? known.remove(talent.id)
     : known.set(talent.id, currentPoints - 1)
 }
@@ -193,7 +229,11 @@ export const removeTalentPoint = (known: Map<number, number>, talent: TalentData
 /**
  * Either adds or removes a talent point based on the modifier.
  */
-export const modifyTalentPoint = (known: Map<number, number>, talent: TalentData, modifier: 1 | -1): Map<number, number> => {
+export const modifyTalentPoint = (
+  known: Map<number, number>,
+  talent: TalentData,
+  modifier: 1 | -1
+): Map<number, number> => {
   if (modifier === 1) {
     return addTalentPoint(known, talent)
   } else {
@@ -204,12 +244,18 @@ export const modifyTalentPoint = (known: Map<number, number>, talent: TalentData
 /**
  * Encodes a Map of known talents into a URL-friendly string.
  */
-export function encodeKnownTalents(known: Map<number, number>, classId: number): string {
+export function encodeKnownTalents(
+  known: Map<number, number>,
+  classId: number
+): string {
   let string = ''
   const { specs } = classById[classId]
   for (let i = 0; i < specs.length; i++) {
     const specId = specs[i]
-    const talents = talentsBySpecArray[specId].sort(SORT_TALENTS)
+    const unsortedTalents = talentsBySpecArray[specId]
+    if (!unsortedTalents) break
+
+    const talents = unsortedTalents.sort(SORT_TALENTS)
     string += i > 0 ? '-' : ''
     string += removeTrailingCharacters(
       talents.map((talent) => known.get(talent.id, 0)).join(''),
@@ -222,7 +268,10 @@ export function encodeKnownTalents(known: Map<number, number>, classId: number):
 /**
  * Decodes a string of points into a Map of talents.
  */
-export function decodeKnownTalents(pointString: string, classId: number): Map<number, number> {
+export function decodeKnownTalents(
+  pointString: string,
+  classId: number
+): Map<number, number> {
   const { specs } = classById[classId]
   let known = Map<number, number>()
 
@@ -236,9 +285,9 @@ export function decodeKnownTalents(pointString: string, classId: number): Map<nu
     for (let y = 0; y < specPointStr.length; y++) {
       const talent = talents[y]
       const points = parseInt(specPointStr[y], 10)
-      
+
       // Validation: break out loop if there's more points in the string than this talent can have
-      if (points > talent.ranks.length) {
+      if (points > talent.ranks) {
         break
       }
 

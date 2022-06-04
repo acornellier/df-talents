@@ -16,7 +16,6 @@ import '../styles/Tooltip.scss'
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
-      <div id="tooltip-root"></div>
       <div className="App">
         <main>
           <Component {...pageProps} />

@@ -2,6 +2,7 @@
   display: flex;
   list-style: none;
   padding: 0;
+  flex-wrap: wrap;
 
   &--center {
     justify-content: center;
@@ -10,7 +11,8 @@
   &__class {
     margin-right: 1em;
     opacity: 1;
-    transition: all .1s ease-out;
+    transition: all 0.1s ease-out;
+    cursor: pointer;
 
     &:hover {
       opacity: 1;
@@ -25,10 +27,10 @@
     }
 
     &--inactive {
-      opacity: .4;
+      opacity: 0.4;
 
       &:hover {
-        opacity: .5;
+        opacity: 0.5;
       }
     }
   }

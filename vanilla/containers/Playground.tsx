@@ -5,7 +5,6 @@ import { Tooltip } from '../components/Tooltip'
 import { Talent } from '../components/Talent'
 import { talentsById } from '../data/talents'
 import { Map } from 'immutable'
-import { SpellTooltip } from '../components/SpellTooltip'
 import classNames from 'classnames'
 
 interface Props {
@@ -131,7 +130,7 @@ export default class Playground extends React.PureComponent<Props> {
                 key={id}
                 talent={talentsById[id]}
                 points={points.get(id, 0)}
-                disabled={points.get(id, 0) === talentsById[id].ranks.length}
+                disabled={points.get(id, 0) === talentsById[id].ranks}
                 onClick={this.handleTalentClick}
                 onRightClick={this.handleTalentRightClick}
               />
@@ -144,7 +143,7 @@ export default class Playground extends React.PureComponent<Props> {
           <Tooltip />
 
           <h3>Simple text content</h3>
-          <Tooltip children="Sanctuary Post" />
+          <Tooltip>Sanctuary Post</Tooltip>
 
           <h3>Using HTML inside</h3>
           <Tooltip>
@@ -173,12 +172,6 @@ export default class Playground extends React.PureComponent<Props> {
           {React.cloneElement(DEEP_WOUNDS, {
             fixed: false,
           })}
-        </Section>
-
-        <Section title="SpellTooltip">
-          <SpellTooltip id={29086} />
-          <SpellTooltip id={20501} />
-          <SpellTooltip id={17793} />
         </Section>
       </div>
     )

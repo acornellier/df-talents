@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import classNames from 'classnames'
 
 interface Props {
-  name?: string
+  children?: ReactNode
+  name: string
   size?: 'small' | 'medium' | 'large'
   golden?: boolean
   className?: string
@@ -14,7 +15,7 @@ const makeUrl = (name: string, size: string, useFallback = false): string => {
   if (useFallback) {
     return `https://wow.zamimg.com/images/wow/icons/${size}/${name}.jpg`
   }
-  return `${process.env.PUBLIC_URL}/images/icons/${size}/${name}.jpg`
+  return `/images/icons/${size}/${name}.jpg`
 }
 
 export class Icon extends React.PureComponent<Props> {
@@ -23,7 +24,7 @@ export class Icon extends React.PureComponent<Props> {
     golden: false,
   }
 
-  img: HTMLImageElement = undefined
+  img: HTMLImageElement | undefined = undefined
 
   state = {
     fadeIn: false,

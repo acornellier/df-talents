@@ -1,14 +1,15 @@
-import {
-  ConfigState, ConfigActionTypes
-} from './types'
+import { ConfigState, ConfigActionTypes } from './types'
 
 const initialState: ConfigState = {
-  alwaysShowPoints: false
+  alwaysShowPoints: false,
 }
 
-export default function(state = initialState, action: ConfigActionTypes): ConfigState {
+export default function reducer(
+  state = initialState,
+  action: ConfigActionTypes
+): ConfigState {
   switch (action.type) {
-    default: 
+    default:
       return state
   }
 }

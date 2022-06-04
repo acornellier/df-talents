@@ -25,7 +25,7 @@
   }
 
   // Cols
-  @for $i from 0 through 3 {
+  @for $i from 0 through 9 {
     &[data-col='#{$i}'] {
       left: -3px + calcLeftOffset($i);
     }
@@ -41,7 +41,7 @@
   }
 
   // Cols
-  @for $i from 0 through 3 {
+  @for $i from 0 through 9 {
     &[data-col='#{$i}'] {
       left: 3px + calcRightOffset($i);
     }
@@ -64,7 +64,7 @@
     }
 
     // Lengths
-    @for $i from 0 through 3 {
+    @for $i from 0 through 9 {
       &[data-length='#{$i}'] {
         width: 1px + ($col-gutter * $i) + ($icon-size * ($i - 1));
       }
@@ -96,7 +96,7 @@
     }
 
     // Cols
-    @for $i from 0 through 3 {
+    @for $i from 0 through 9 {
       &[data-col='#{$i}'] {
         left: 5px +
           $col-offset +
@@ -106,7 +106,7 @@
     }
 
     // Lengths
-    @for $i from 0 through 3 {
+    @for $i from 0 through 9 {
       &[data-length='#{$i}'] {
         height: calcArrowHeight($i);
       }
@@ -126,14 +126,14 @@
     }
 
     // Width
-    @for $i from 0 through 3 {
+    @for $i from 0 through 9 {
       &[data-width='#{$i}'] {
         width: 2px + ($icon-size * $i);
       }
     }
 
     // Height
-    @for $i from 0 through 3 {
+    @for $i from 0 through 9 {
       &[data-height='#{$i}'] {
         height: 8px + ($row-offset + ($icon-size * 0.5)) * $i;
       }
@@ -164,7 +164,7 @@
 
   &--right-down {
     // Positioning based on cols
-    @for $i from 0 through 3 {
+    @for $i from 0 through 9 {
       &[data-col='#{$i}'] {
         left: 2px + calcRightOffset($i);
       }
@@ -193,7 +193,7 @@
 
   &--left-down {
     // Positioning based on cols
-    @for $i from 0 through 3 {
+    @for $i from 0 through 9 {
       &[data-col='#{$i}'] {
         left: -2px + calcLeftOffset($i);
       }

@@ -1,38 +1,27 @@
 import { Map } from 'immutable'
 import {
-  CalculatorState, 
-  CalculatorActionTypes, 
-  SET_CLASS, 
-  ADD_POINT, 
-  REMOVE_POINT, 
+  CalculatorState,
+  CalculatorActionTypes,
+  ADD_POINT,
+  REMOVE_POINT,
   SET_POINTS,
-  RESET_SPEC
+  RESET_SPEC,
 } from './types'
-import { canLearnTalent, canUnlearnTalent, encodeKnownTalents } from '../../lib/tree'
+import { canLearnTalent, canUnlearnTalent } from '../../lib/tree'
 import { talentsById, talentsBySpec } from '../../data/talents'
 
 const initialState: CalculatorState = {
-  classId: null,
   points: Map<number, number>(),
-  pointsEncoded: ''
+  pointsEncoded: '',
 }
 
-export default function(state = initialState, action: CalculatorActionTypes): CalculatorState {
-  const { classId, points } = state
+export default function reducer(
+  state = initialState,
+  action: CalculatorActionTypes
+): CalculatorState {
+  const { points } = state
 
   switch (action.type) {
-    case SET_CLASS: {
-      if (classId === action.classId) {
-        return state
-      }
-      return {
-        ...state,
-        classId: action.classId,
-        points: action.points || Map(),
-        pointsEncoded: ''
-      }
-    }
-
     case ADD_POINT: {
       const { talentId } = action
       const talent = talentsById[talentId]
@@ -43,7 +32,7 @@ export default function(state = initialState, action: CalculatorActionTypes): Ca
       return {
         ...state,
         points: nextPoints,
-        pointsEncoded: encodeKnownTalents(nextPoints, classId)
+        // pointsEncoded: encodeKnownTalents(nextPoints, specId),
       }
     }
 
@@ -57,7 +46,7 @@ export default function(state = initialState, action: CalculatorActionTypes): Ca
       return {
         ...state,
         points: nextPoints,
-        pointsEncoded: encodeKnownTalents(nextPoints, classId)
+        // pointsEncoded: encodeKnownTalents(nextPoints, specId),
       }
     }
 
@@ -67,20 +56,22 @@ export default function(state = initialState, action: CalculatorActionTypes): Ca
       }
       return {
         ...state,
-        points: action.points
+        points: action.points,
       }
     }
 
     case RESET_SPEC: {
-      const resetIds = Object.values(talentsBySpec[action.specId]).map((t) => t.id)
+      const resetIds = Object.values(talentsBySpec[action.specId]).map(
+        (t) => t.id
+      )
       const nextPoints = points.filter((_, id) => resetIds.indexOf(id) === -1)
       return {
         ...state,
-        points: nextPoints
+        points: nextPoints,
       }
     }
 
-    default: 
+    default:
       return state
   }
 }

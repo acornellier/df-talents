@@ -1,55 +1,45 @@
 import React from 'react'
-import { classByName } from '../data/classes'
+import { SpecId, classes, specNames } from '../data/classes'
 import { Icon } from './Icon'
 import classNames from 'classnames'
-import { Controller, Trigger, Tooltip } from './Tooltip'
+import { Tooltip } from './Tooltip'
 import Link from 'next/link'
 
 interface Props {
-  /** Name of the selected class, lowercase */
-  selected?: string
+  selected: SpecId | null
   center?: boolean
   className?: string
 }
 
-const classNameForItem = (c: ClassData, selected: string) =>
+const classNameForItem = (spec: SpecId, selected: SpecId | null) =>
   classNames('class-picker__class', {
-    'class-picker__class--active': c.name.toLowerCase() === selected,
-    'class-picker__class--inactive':
-      !!selected && c.name.toLowerCase() !== selected,
+    'class-picker__class--active': spec === selected,
+    'class-picker__class--inactive': !!selected && spec !== selected,
   })
 
-export class ClassPicker extends React.PureComponent<Props> {
-  render() {
-    const { selected, center = false } = this.props
+export function ClassPicker({ selected, center = false, className }: Props) {
+  const cn = classNames(
+    'class-picker',
+    {
+      'class-picker--has-selection': !!selected,
+      'class-picker--center': center,
+    },
+    className
+  )
 
-    const cn = classNames(
-      'class-picker',
-      {
-        'class-picker--has-selection': !!selected,
-        'class-picker--center': center,
-      },
-      this.props.className
-    )
-
-    return (
-      <ul className={cn}>
-        {Object.values(classByName).map((c) => (
-          <li key={c.id} className={classNameForItem(c, selected)}>
-            <Controller>
-              <Trigger>
-                <Link href={`/${c.name.toLowerCase()}`}>
-                  <Icon
-                    name={c.icon}
-                    golden={selected === c.name.toLowerCase()}
-                  />
-                </Link>
-              </Trigger>
-              <Tooltip>{c.name}</Tooltip>
-            </Controller>
+  return (
+    <ul className={cn}>
+      {classes.flatMap((c) =>
+        c.specs.map((spec) => (
+          <li key={spec} className={classNameForItem(spec, selected)}>
+            <Tooltip title={specNames[spec]}>
+              <Link href={`/${spec}`}>
+                <Icon name={c.icon} golden={selected === spec} />
+              </Link>
+            </Tooltip>
           </li>
-        ))}
-      </ul>
-    )
-  }
+        ))
+      )}
+    </ul>
+  )
 }
