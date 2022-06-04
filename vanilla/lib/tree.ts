@@ -7,8 +7,8 @@ import {
 } from '../data/talents'
 import { classById } from '../data/classes'
 
-export const MAX_POINTS = 51
-export const MAX_ROWS = 7
+export const MAX_SPEC_POINTS = 30
+export const MAX_ROWS = 9
 
 export const SORT_TALENTS = (a: TalentData, b: TalentData) => {
   if (a.row === b.row) {
@@ -52,7 +52,7 @@ export function getPointsInSpec(
 export function calcAvailablePoints(known: Map<number, number>): number {
   return Math.max(
     0,
-    MAX_POINTS - known.reduce((prev, current) => prev + current, 0)
+    MAX_SPEC_POINTS - known.reduce((prev, current) => prev + current, 0)
   )
 }
 
@@ -63,7 +63,7 @@ export function calcMeetsRequirements(
   talent: TalentData,
   known: Map<number, number>
 ) {
-  return talent.requires?.every((req) => {
+  return talent.requires.every((req) => {
     const dependencyTalent = talentsById[req]
     return known.get(req, 0) >= dependencyTalent.ranks
   })
@@ -76,7 +76,7 @@ export function getUnmetRequirements(
   specName: string
 ): string {
   const missing = []
-  const dependency = talent.requires?.[0]
+  const dependency = talent.requires[0]
 
   if (dependency) {
     const dependencyTalent = talentsById[dependency]
@@ -116,7 +116,7 @@ export const canLearnTalent = (
   }
 
   // Support for specific Talent dependency requirement.
-  if (talent.requires?.length && !calcMeetsRequirements(talent, known)) {
+  if (talent.requires.length && !calcMeetsRequirements(talent, known)) {
     return false
   }
 
@@ -138,7 +138,7 @@ export const getCumulativePointsPerRow = (
   return known.reduce((reduction, points, talentId) => {
     const t = talentsBySpec[specId][talentId]
     if (t && points > 0) {
-      for (let row = t.row; row < MAX_ROWS; row++) {
+      for (let row = t.row; row <= MAX_ROWS; row++) {
         reduction[row] = (reduction[row] || 0) + points
       }
     }
@@ -162,7 +162,7 @@ export const canUnlearnTalent = (
   // Prevent if another talent depends on this
   const isDependency = known.some((points, talentId) => {
     const t = talentsBySpec[specId][talentId]
-    return points > 0 && !!t?.requires?.some((req) => req === talent.id)
+    return points > 0 && !!t?.requires.some((req) => req === talent.id)
   })
   if (isDependency) {
     console.warn('is dependency')
@@ -180,8 +180,8 @@ export const canUnlearnTalent = (
     return (
       t &&
       points > 0 &&
-      ((t.row >= 4 && cumulativePointsPerRow[4] < 8) ||
-        (t.row >= 7 && cumulativePointsPerRow[4] < 20))
+      ((t.row <= 4 && cumulativePointsPerRow[4] < 8) ||
+        (t.row <= 7 && cumulativePointsPerRow[4] < 20))
     )
   })
 

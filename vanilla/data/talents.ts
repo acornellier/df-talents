@@ -11,7 +11,7 @@ interface RootArray {
   [key: number]: TalentData[]
 }
 
-const feralTalents = [
+const feralTalents: TalentData[] = [
   {
     id: 1,
     name: "Tiger's Fury",
@@ -20,6 +20,7 @@ const feralTalents = [
     row: 0,
     col: 3,
     ranks: 1,
+    requires: [],
     icon: 'ability_mount_jungletiger',
   },
   {
@@ -31,6 +32,7 @@ const feralTalents = [
     ranks: 3,
     requires: [1],
     icon: 'spell_chargepositive',
+    circular: true,
   },
   {
     id: 3,
@@ -42,6 +44,7 @@ const feralTalents = [
     ranks: 1,
     requires: [1],
     icon: 'spell_nature_crystalball',
+    circular: true,
   },
   {
     id: 4,
@@ -52,6 +55,7 @@ const feralTalents = [
     ranks: 3,
     requires: [1],
     icon: 'ability_mount_jungletiger',
+    circular: true,
   },
   {
     id: 5,
@@ -62,6 +66,7 @@ const feralTalents = [
     ranks: 1,
     requires: [3],
     icon: 'spell_shadow_vampiricaura',
+    circular: true,
   },
   {
     id: 6,
@@ -73,6 +78,7 @@ const feralTalents = [
     ranks: 1,
     requires: [3],
     icon: 'spell_druid_thrash',
+    circular: true,
   },
   {
     id: 7,
@@ -95,6 +101,7 @@ const feralTalents = [
     ranks: 2,
     requires: [5],
     icon: 'ability_druid_disembowel',
+    circular: true,
   },
   {
     id: 9,
@@ -106,6 +113,7 @@ const feralTalents = [
     ranks: 2,
     requires: [7],
     icon: 'spell_shadow_vampiricaura',
+    circular: true,
   },
   {
     id: 10,
@@ -117,6 +125,7 @@ const feralTalents = [
     ranks: 3,
     requires: [8],
     icon: 'ability_hunter_catlikereflexes',
+    circular: true,
   },
   {
     id: 11,
@@ -139,6 +148,7 @@ const feralTalents = [
     ranks: 3,
     requires: [9],
     icon: 'ability_druid_ferociousbite',
+    circular: true,
   },
   {
     id: 13,
@@ -150,6 +160,7 @@ const feralTalents = [
     ranks: 1,
     requires: [10],
     icon: 'spell_druid_lunarinspiration',
+    circular: true,
   },
   {
     id: 14,
@@ -172,6 +183,7 @@ const feralTalents = [
     ranks: 1,
     requires: [11],
     icon: 'spell_druid_momentofclarity',
+    circular: true,
   },
   {
     id: 16,
@@ -205,6 +217,7 @@ const feralTalents = [
     ranks: 1,
     requires: [14],
     icon: 'ability_hunter_pet_cat',
+    circular: true,
   },
   {
     id: 19,
@@ -216,6 +229,7 @@ const feralTalents = [
     ranks: 1,
     requires: [14, 16],
     icon: 'ability_druid_infectedwound',
+    circular: true,
   },
   {
     id: 20,
@@ -247,6 +261,7 @@ const feralTalents = [
     ranks: 2,
     requires: [18],
     icon: 'ability_mount_jungletiger',
+    circular: true,
   },
   {
     id: 23,
@@ -258,6 +273,7 @@ const feralTalents = [
     ranks: 2,
     requires: [19],
     icon: 'ability_druid_healinginstincts',
+    circular: true,
   },
   {
     id: 24,
@@ -268,6 +284,7 @@ const feralTalents = [
     ranks: 2,
     requires: [20],
     icon: 'inv_jewelcrafting_gem_30',
+    circular: true,
   },
   {
     id: 25,
@@ -323,6 +340,7 @@ const feralTalents = [
     ranks: 1,
     requires: [23, 24],
     icon: 'ability_druid_manatree',
+    circular: true,
   },
   {
     id: 30,
@@ -337,6 +355,17 @@ const feralTalents = [
   },
   {
     id: 31,
+    name: 'Improved Adaptive Swarm',
+    description: '???',
+    row: 9,
+    col: 1,
+    ranks: 1,
+    requires: [27],
+    icon: 'ability_maldraxxus_druid',
+    circular: true,
+  },
+  {
+    id: 32,
     name: 'Improved Incarnation and Convoke',
     description:
       'Shifting out of Incarnation before it expires ends the effect and refunds a portion of its cooldown. Convoke the Spirits has an increased chance to use an exceptional spell or ability.',
@@ -345,9 +374,10 @@ const feralTalents = [
     ranks: 1,
     requires: [28],
     icon: 'ability_druid_naturalperfection',
+    circular: true,
   },
   {
-    id: 32,
+    id: 33,
     name: 'Circle of Life and Death',
     description:
       'Your damage over time effects deal their damage in 25% less time, and your healing over time effects in 15% less time.',
@@ -356,6 +386,7 @@ const feralTalents = [
     ranks: 1,
     requires: [29],
     icon: 'ability_druid_cyclone',
+    circular: true,
   },
 ]
 

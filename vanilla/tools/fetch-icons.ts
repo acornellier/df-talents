@@ -9,14 +9,17 @@ const SIZES = ['medium', 'large']
 
 const onlyUnique = (value, index, self) => self.indexOf(value) === index
 const getIcon = (item): string => item.icon
-const isSizeMissing = (icon) => (size): boolean => !fs.existsSync(getPath(icon, size))
+const isSizeMissing =
+  (icon) =>
+  (size): boolean =>
+    !fs.existsSync(getPath(icon, size))
 
 const getIconNames = (): string[] => {
   return [
     'inv_misc_questionmark',
     ...Object.values(spells).map(getIcon),
     ...Object.values(classes).map(getIcon),
-    ...Object.values(talentsById).map(getIcon)
+    ...Object.values(talentsById).map(getIcon),
   ].filter(onlyUnique)
 }
 
@@ -33,7 +36,7 @@ const getUrl = (icon: string, size: string): string => {
   return `https://wow.zamimg.com/images/wow/icons/${size}/${icon}.jpg`
 }
 
-const download = async (uri: string, path: string) => 
+const download = async (uri: string, path: string) =>
   request(uri).pipe(fs.createWriteStream(path))
 
 export const fetchIcons = async () => {
@@ -46,8 +49,8 @@ export const fetchIcons = async () => {
 
     if (missingSizes.length) {
       console.log(`missing sizes for ${icon}: `, missingSizes)
-      
-      missingSizes.forEach(size => {
+
+      missingSizes.forEach((size) => {
         download(getUrl(icon, size), getPath(icon, size))
       })
     }

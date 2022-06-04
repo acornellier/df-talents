@@ -39,6 +39,7 @@ export default function reducer(
     case REMOVE_POINT: {
       const { talentId } = action
       const talent = talentsById[talentId]
+      console.log(canUnlearnTalent(points, talent))
       if (!canUnlearnTalent(points, talent)) {
         return state
       }

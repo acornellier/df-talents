@@ -43,6 +43,10 @@
     }
   }
 
+  &--circle {
+    clip-path: circle();
+  }
+
   &--small {
     @include icon-size(20px);
   }

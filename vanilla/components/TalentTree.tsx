@@ -91,7 +91,7 @@ export function TalentTree({
                 disabled={availablePoints === 0 || !canLearn}
               />
 
-              {talent.requires?.map((req) => (
+              {talent.requires.map((req) => (
                 <Arrow
                   key={req}
                   from={talentsById[req]}

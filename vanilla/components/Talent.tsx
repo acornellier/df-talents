@@ -29,10 +29,15 @@ export class Talent extends React.PureComponent<Props> {
       'talent--available': !disabled && points < talent.ranks,
       'talent--disabled-with-points':
         points >= talent.ranks || (points > 0 && disabled),
+      'talent--circle': talent.circular,
     })
 
     const pointsClassNames = classNames('point-label', {
       'point-label--enabled': !disabled,
+    })
+
+    const talentStatusClassNames = classNames('talent__status', {
+      'talent__status--circle': talent.circular,
     })
 
     return (
@@ -61,8 +66,8 @@ export class Talent extends React.PureComponent<Props> {
           errors={errors}
         >
           <>
-            <div className="talent__status" />
-            <Icon name={talent.icon} size="medium" />
+            <div className={talentStatusClassNames} />
+            <Icon name={talent.icon} circle={talent.circular} />
 
             {showPoints && (
               <div className={pointsClassNames}>

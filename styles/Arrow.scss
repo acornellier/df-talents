@@ -135,7 +135,7 @@
     // Height
     @for $i from 0 through 9 {
       &[data-height='#{$i}'] {
-        height: 8px + ($row-offset + ($icon-size * 0.5)) * $i;
+        height: 13px + ($row-offset + ($icon-size * 0.5)) * $i;
       }
     }
 

@@ -13,10 +13,12 @@ interface TalentData {
   row: number
   /** Column for talent. Starts at 0 */
   col: number
-  icon: string
+  /** Max number of ranks */
   ranks: number
   /** Ids of talent dependencies for this talent */
-  requires?: number[]
+  requires: number[]
+  icon: string
+  circular?: boolean
 }
 
 interface Talent {
