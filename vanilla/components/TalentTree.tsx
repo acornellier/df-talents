@@ -91,13 +91,14 @@ export function TalentTree({
                 disabled={availablePoints === 0 || !canLearn}
               />
 
-              {!!talent.requires?.length && (
+              {talent.requires?.map((req) => (
                 <Arrow
-                  from={talentsById[talent.requires[0]]}
+                  key={req}
+                  from={talentsById[req]}
                   to={talent}
                   active={points > 0 || canLearn}
                 />
-              )}
+              ))}
             </React.Fragment>
           )
         })}

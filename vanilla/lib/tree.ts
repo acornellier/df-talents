@@ -180,10 +180,11 @@ export const canUnlearnTalent = (
     return (
       t &&
       points > 0 &&
-      t.row > 0 &&
-      cumulativePointsPerRow[t.row - 1] < t.row * 5
+      ((t.row >= 4 && cumulativePointsPerRow[4] < 8) ||
+        (t.row >= 7 && cumulativePointsPerRow[4] < 20))
     )
   })
+
   if (wouldBreach) {
     console.warn('point requirements would be breached')
     return false

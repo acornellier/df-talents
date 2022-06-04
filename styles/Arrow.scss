@@ -5,7 +5,7 @@
 }
 
 @function calcLeftOffset($col) {
-  @return $col-offset + ($col-gutter * ($col - 1)) + $icon-size;
+  @return $col-offset + ($col-distance * ($col - 1)) + $icon-size;
 }
 
 @function calcRightOffset($col) {
@@ -89,7 +89,7 @@
     }
 
     // Rows
-    @for $i from 0 through 6 {
+    @for $i from 0 through 9 {
       &[data-row='#{$i}'] {
         top: $icon-size + baseRowTopOffset($i);
       }
@@ -115,7 +115,7 @@
 
   &--side-down {
     // Position based on row
-    @for $i from 0 through 6 {
+    @for $i from 0 through 9 {
       &[data-row='#{$i}'] {
         top: 12px + baseRowTopOffset($i);
 
@@ -139,16 +139,6 @@
       }
     }
 
-    // Horizontal
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: $arrow-width;
-    }
-
     // Arrow down
     &:after {
       content: '';
@@ -166,28 +156,20 @@
     // Positioning based on cols
     @for $i from 0 through 9 {
       &[data-col='#{$i}'] {
-        left: 2px + calcRightOffset($i);
+        left: -24px + calcRightOffset($i);
       }
     }
 
     &.arrow--active {
-      &:before {
-        background-image: url('../public/images/arrows/rightdown-active.png');
-      }
       &:after {
         background-image: url('../public/images/arrows/down-active.png');
       }
     }
 
-    // Arrow to the right
-    &:before {
-      background-image: url('../public/images/arrows/rightdown.png');
-      background-position: center right;
-    }
-
     // Arrow down
     &:after {
       right: 0;
+      transform: rotate(-45deg);
     }
   }
 
@@ -200,22 +182,14 @@
     }
 
     &.arrow--active {
-      &:before {
-        background-image: url('../public/images/arrows/leftdown-active.png');
-      }
       &:after {
         background-image: url('../public/images/arrows/down-active.png');
       }
     }
 
-    // Arrow to the left
-    &:before {
-      background-image: url('../public/images/arrows/leftdown.png');
-      background-position: center left;
-    }
-
     // Arrow down
     &:after {
+      transform: rotate(45deg);
       left: 0;
     }
   }
